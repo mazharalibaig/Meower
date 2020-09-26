@@ -1,10 +1,12 @@
+// const { response } = require("express");
 console.log("Hello World!!");
-
-const form = document.querySelector('form');
-const loadingElement = document.querySelector('.loading');
 
 var none = "none";
 var empty = "";
+
+const form = document.querySelector('form');
+const loadingElement = document.querySelector('.loading');
+const API_URL = 'http://localhost:5000/mews';
 
 loadingElement.style.display = none;
 
@@ -23,7 +25,18 @@ form.addEventListener('submit', (event) => {
     form.style.display = none;
     loadingElement.style.display = '';
 
-    console.log(loadingElement.style.display);
+    fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify(mew),
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then((response => response.json()))
+        .then(createdMew => {
+            console.log(createdMew);
+        });
 
-    console.log(mew);
+    // console.log(loadingElement.style.display);
+
+    // console.log(mew);
 });
